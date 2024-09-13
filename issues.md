@@ -34,3 +34,5 @@ kubectl get pods -o wide
    ```bash
    kubectl exec -it bash-worker-1 -- ping 10.244.2.2
    ```
+
+   Not working
