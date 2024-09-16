@@ -6,7 +6,7 @@ Kubernetes is a powerful platform that automates the deployment, scaling, and ma
 
 CNI plug-ins are responsible for configuring the networking for containers, assigning IP addresses, and managing network interfaces. There is no single standard implementation for Kubernetes networking, as the networking setup is often influenced by the environment where the cluster is deployed. This flexibility allows for a variety of CNI plug-ins that can meet specific networking requirements.
 
-![](./images/cni.drawio.svg)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/cni.drawio.svg)
 
 In this guide, we'll explore the **internals of Kubernetes networking** and create a **custom CNI plug-in** using Bash to manage networking in a Kubernetes cluster. This plug-in will configure pod network interfaces, set up an overlay network for inter-node communication, and handle the allocation of IP addresses. By understanding and implementing a custom CNI plug-in, you'll gain deeper insights into Kubernetes networking and how to manage low-level networking tasks.
 
@@ -15,7 +15,7 @@ In this guide, we'll explore the **internals of Kubernetes networking** and crea
 
 To run Kubernetes on AWS, we will first provision the necessary infrastructure using **Terraform**. This setup will create a Virtual Private Cloud (VPC), subnets, security groups, and three EC2 instances that will serve as the **master** and **worker nodes** of our Kubernetes cluster.
 
-![](./images/banner.drawio.svg)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/banner.drawio.svg)
 
 ### AWS CLI Configuration
 
@@ -24,8 +24,7 @@ Run the following command to configure AWS CLI:
 ```bash
 aws configure
 ```
-![alt text](./images/1.png)
-
+![alt text](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/1.png)
 
 This command prompts you for your AWS Access Key ID, Secret Access Key, region, and output format.
 
@@ -198,7 +197,7 @@ output "ec2_public_ips" {
    ```bash
    terraform apply
    ```
-   ![](./images/2.png)
+   ![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/2.png)
  
    This will create a VPC, subnet, Internet gateway, route tables, and three EC2 instances. After Terraform completes, it will output the public IPs and the path to the SSH private key for accessing the instances.
 
@@ -214,7 +213,7 @@ Use the private key from the Terraform output to SSH into each EC2 instance:
 ssh -i cni.pem ubuntu@<instance-public-ip>
 ```
 
-![](./images/3.png)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/3.png)
 
 ### **Configure Each Node**
 
@@ -245,7 +244,7 @@ This command initializes the Kubernetes cluster on the master node. The --pod-ne
 
 Next, use the `kubeadm join` command in both worker nodes to add the **worker nodes** to the cluster.
 
-![](./images/4.png)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/4.png)
 
 ### **Testing the cluster**
 
@@ -262,7 +261,7 @@ Now, you should be able to use kubectl from the master VM. Let’s use the kubec
 ```bash
 kubectl get nodes
 ```
-![](./images/5.png)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/5.png)
 
 As you can see from the output, both master and worker nodes are currently in the “NotReady” state. This is expected, because we haven’t configured any networking plug-in yet. If you try to deploy a pod at this time, your pod will forever hang in the “Pending” state, because the Kubernetes schedule will not be able to find any “Ready” node for it.
 
@@ -306,7 +305,7 @@ To implement networking for Kubernetes pods, we will create a custom CNI plug-in
    ```bash
    kubectl get nodes
    ```
-   ![](./images/6.png)
+   ![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/6.png)
 
 ### Create the network
 
@@ -581,7 +580,7 @@ Now, let’s run kubectl get pod to make sure that all pods are healthy and then
 kubectl get pods -o wide
 ```
 
-![](./images/7.png)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/7.png)
 
 In your case, the result might be different.
 
@@ -593,7 +592,7 @@ kubectl exec -it bash-worker-1 -- bash
 
 From inside of the pod, you can ping various addresses to verify network connectivity. 
 
-![](./images/8.png)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/8.png)
 
 As you can see, the only thing that actually works is a container to host communication. 
 
@@ -613,7 +612,7 @@ Now try to ping other containers in the same host (e.g `worker-1` containers)
 ```bash
 kubectl exec -it bash-worker-1 -- bash
 ```
-![](./images/9.png)
+![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/9.png)
 
 ping was successful.
 
@@ -648,7 +647,7 @@ Containers in a private subnet (e.g., 10.244.0.0/24) cannot access the Internet 
 
   After setting up these NAT rules, containers will be able to access the Internet
 
-  ![](./images/10.png)
+  ![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/10.png)
  
 ## **Conclusion**
 
