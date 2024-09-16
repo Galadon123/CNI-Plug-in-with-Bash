@@ -1,10 +1,4 @@
 ## To enable communication between containers on different vms
-
-```bash
-kubectl get pods -o wide
-```
-![](./images/image.png)
-
 ### On Worker-1:
 1. **Add a Route to the Container Network of Worker-2:**
    ```bash
