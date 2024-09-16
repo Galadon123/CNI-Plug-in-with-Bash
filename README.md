@@ -6,16 +6,15 @@ Kubernetes is a powerful platform that automates the deployment, scaling, and ma
 
 CNI plug-ins are responsible for configuring the networking for containers, assigning IP addresses, and managing network interfaces. There is no single standard implementation for Kubernetes networking, as the networking setup is often influenced by the environment where the cluster is deployed. This flexibility allows for a variety of CNI plug-ins that can meet specific networking requirements.
 
-![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/cni.drawio.svg)
+![](./images/11.drawio.svg)
 
 In this guide, we'll explore the **internals of Kubernetes networking** and create a **custom CNI plug-in** using Bash to manage networking in a Kubernetes cluster. This plug-in will configure pod network interfaces, set up an overlay network for inter-node communication, and handle the allocation of IP addresses. By understanding and implementing a custom CNI plug-in, you'll gain deeper insights into Kubernetes networking and how to manage low-level networking tasks.
-
 
 ## **Setting Up the Infrastructure with Terraform**
 
 To run Kubernetes on AWS, we will first provision the necessary infrastructure using **Terraform**. This setup will create a Virtual Private Cloud (VPC), subnets, security groups, and three EC2 instances that will serve as the **master** and **worker nodes** of our Kubernetes cluster.
 
-![](https://raw.githubusercontent.com/Galadon123/CNI-Plug-in-with-Bash/f0cb507bd65dc68805d769c7294162194d8922de/images/banner.drawio.svg)
+![](./images/12.drawio.svg)
 
 ### AWS CLI Configuration
 
